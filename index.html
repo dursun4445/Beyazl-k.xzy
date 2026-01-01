@@ -9,81 +9,127 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
-        /* ÜST BAR */
-        .navbar { background: #0c0c0c; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid #1a1a1a; position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .logo { display: flex; align-items: center; gap: 10px; font-weight: bold; color: #4a148c; font-size: 18px; }
-        .logo img { width: 35px; height: 35px; border-radius: 5px; border: 1px solid #4a148c; }
-        .menu-btn { font-size: 26px; cursor: pointer; color: #fff; }
+        /* NAVBAR */
+        .navbar { background: #0c0c0c; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid #1a1a1a; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-area img { width: 35px; height: 35px; border-radius: 4px; border: 1px solid #4a148c; }
+        .menu-toggle { font-size: 24px; cursor: pointer; color: #fff; background: #1a1a1a; padding: 5px 10px; border-radius: 5px; }
 
-        /* YAN MENÜ (SIDEBAR) */
-        .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: #0c0c0c; transition: 0.4s ease-in-out; z-index: 2000; border-right: 1px solid #1a1a1a; overflow-y: auto; }
-        .sidebar.active { left: 0; box-shadow: 5px 0 15px rgba(74, 20, 140, 0.3); }
+        /* SIDEBAR */
+        .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: #0c0c0c; transition: 0.3s; z-index: 2000; border-right: 1px solid #1a1a1a; overflow-y: auto; }
+        .sidebar.active { left: 0; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1500; }
         .overlay.active { display: block; }
 
-        /* PROFİL KISMI */
-        .profile { padding: 30px 20px; border-bottom: 1px solid #1a1a1a; text-align: left; }
-        .profile img { width: 65px; height: 65px; border-radius: 50%; border: 2px solid #4a148c; background: #fff; object-fit: cover; }
-        .profile-info { margin-top: 15px; }
-        .profile-info b { display: block; font-size: 18px; letter-spacing: 0.5px; }
-        .profile-info span { font-size: 12px; color: #2ecc71; font-weight: bold; }
-        .profile-info span::before { content: "● "; }
+        /* SIDEBAR PROFILE */
+        .sb-profile { padding: 25px 20px; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 15px; }
+        .sb-profile img { width: 55px; height: 55px; border-radius: 5px; border: 2px solid #4a148c; background: #fff; }
+        .sb-info b { display: block; font-size: 15px; color: #fff; }
+        .sb-info span { font-size: 11px; color: #2ecc71; font-weight: bold; }
+        .verified-badge { color: #3897f0; font-size: 12px; margin-left: 5px; }
 
-        /* MENÜ LİSTESİ */
+        /* MENU LIST */
         .nav-list { padding: 10px 0; }
-        .label { padding: 15px 20px 8px; font-size: 11px; color: #4a148c; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-item { padding: 14px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; color: #bbb; text-decoration: none; font-size: 15px; }
-        .nav-item i { color: #4a148c; width: 20px; text-align: center; font-size: 18px; }
-        .nav-item:active { background: #1a1a1a; color: #fff; border-left: 3px solid #4a148c; }
+        .label { padding: 15px 20px 5px; font-size: 11px; color: #f1c40f; font-weight: bold; text-transform: uppercase; }
+        .nav-item { padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #bbb; border-bottom: 1px solid #111; transition: 0.2s; }
+        .nav-item:active { background: #1a1a1a; color: #fff; }
+        .nav-item div { display: flex; align-items: center; gap: 12px; }
+        .nav-item i { color: #4a148c; width: 20px; text-align: center; }
 
-        /* ANA İÇERİK */
-        .content { margin-top: 80px; padding: 20px; }
-        .welcome-card { background: linear-gradient(135deg, #111 0%, #050505 100%); padding: 30px 20px; border-radius: 15px; border: 1px solid #222; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .welcome-card h2 { margin: 0; font-size: 20px; }
-        .premium-tag { display: inline-block; background: #4a148c; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-top: 10px; font-weight: bold; }
+        /* MAIN CONTENT */
+        .container { margin-top: 80px; padding: 15px; }
+        .breadcrumb { font-size: 12px; color: #888; margin-bottom: 20px; }
+        
+        /* AD SOYAD SORGU PANEL */
+        .query-box { background: #0c0c0c; border: 1px solid #1a1a1a; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .info-alert { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 15px; border-radius: 4px; font-size: 13px; color: #ccc; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; background: #151515; border: 1px solid #222; color: #fff; border-radius: 5px; outline: none; }
+        input:focus { border-color: #4a148c; }
+        .btn-row { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .btn { padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px; }
+        .btn-query { background: transparent; color: #fff; border: 1px solid #333; }
+        .btn-query:active { background: #4a148c; }
+
+        /* DATA TABLE */
+        .table-container { background: #0c0c0c; border: 1px solid #1a1a1a; border-radius: 8px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #111; color: #fff; font-size: 12px; padding: 12px; text-align: left; border-bottom: 1px solid #1a1a1a; }
+        td { padding: 12px; font-size: 13px; color: #ccc; border-bottom: 1px solid #1a1a1a; }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <div class="logo">
-            <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" alt="Keleş">
-            <span>BeyazKoç VIP</span>
+        <div class="logo-area">
+            <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" alt="Logo">
+            <span>Beyaz Koç Panel</span>
         </div>
-        <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
     <div class="sidebar" id="sidebar">
-        <div class="profile">
-            <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" alt="User">
-            <div class="profile-info">
-                <b>BeyazKoçBedava</b>
-                <span>Çevrimiçi</span>
+        <div class="sb-profile">
+            <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" alt="AK-47">
+            <div class="sb-info">
+                <b>BeyazKoçBedava <i class="fas fa-check-circle verified-badge"></i></b>
+                <span>● Çevrimiçi</span>
             </div>
         </div>
-
         <div class="nav-list">
-            <div class="label">GSM ÇÖZÜMLERİ</div>
-            <div class="nav-item" onclick="alert('Sorgu başlatıldı...')"><i class="fas fa-phone"></i> GSM Sorgu</div>
-            <div class="nav-item" onclick="alert('SMS Bomber aktif!')"><i class="fas fa-bomb"></i> SMS Bomber</div>
-            
-            <div class="label">ARAÇLAR</div>
-            <div class="nav-item" onclick="alert('Mernis datası yükleniyor...')"><i class="fas fa-id-card"></i> Mernis 2026</div>
-            <div class="nav-item" onclick="alert('Sızıntı izleniyor...')"><i class="fas fa-unlock-alt"></i> Veri Sızıntısı</div>
-            
-            <div class="label">PREMİUM</div>
-            <div class="nav-item"><i class="fas fa-crown" style="color: gold;"></i> VIP Satın Al</div>
-            <div class="nav-item"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</div>
+            <div class="nav-item"><div><i class="fas fa-phone"></i> GSM Çözümleri</div><i class="fas fa-chevron-down"></i></div>
+            <div class="nav-item"><div><i class="fas fa-tools"></i> Araçlar</div><i class="fas fa-chevron-down"></i></div>
+            <div class="label">Premium ÇÖZÜMLER</div>
+            <div class="nav-item"><div><i class="fab fa-instagram"></i> İnstagram Çözümleri</div><i class="fas fa-chevron-down"></i></div>
+            <div class="nav-item"><div><i class="fab fa-whatsapp"></i> Whatsapp Çözümleri</div><i class="fas fa-chevron-down"></i></div>
+            <div class="nav-item"><div><i class="fas fa-map-marker-alt"></i> Adres Çözümleri</div><i class="fas fa-chevron-down"></i></div>
+            <div class="nav-item"><div><i class="fas fa-user-friends"></i> Kişi Çözümleri</div><i class="fas fa-chevron-down"></i></div>
+            <div class="nav-item"><div><i class="fas fa-university"></i> IBAN Çözümleri</div><i class="fas fa-chevron-down"></i></div>
         </div>
     </div>
 
-    <div class="content">
-        <div class="welcome-card">
-            <h2>Hoş Geldin, BeyazKoçBedava!</h2>
-            <div class="premium-tag">PREMİUM AKTİF</div>
-            <p style="color: #666; font-size: 13px; margin-top: 15px;">Kullanmak istediğin aracı sağ üstteki menüden seçebilirsin.</p>
+    <div class="container">
+        <div class="breadcrumb"><b>Ad Soyad Sorgu</b><br>Ana Sayfa - Ad Soyad Sorgu</div>
+
+        <div class="query-box">
+            <div class="info-alert">
+                <i class="fas fa-info-circle"></i> <b>Bilgilendirme</b><br>
+                İlgili alanları girdikten sonra sorgulamaya basmanız yeterlidir.
+            </div>
+            
+            <div style="margin-bottom: 15px; font-weight: bold;"><i class="fas fa-address-card" style="color: #4a90e2;"></i> Ad Soyad Sorgu</div>
+            
+            <div class="input-group"><input type="text" id="ad" placeholder="Ad"></div>
+            <div class="input-group"><input type="text" id="soyad" placeholder="Soyad"></div>
+            <div class="input-group"><input type="text" id="il" placeholder="İl (isteğe bağlı)"></div>
+
+            <div class="btn-row">
+                <div class="btn btn-query" onclick="sorgula()">Sorgula</div>
+                <div class="btn" style="color: #888;">Yazdır</div>
+                <div class="btn" style="color: #888;">Sıfırla</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>TC</th>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Baba Adı</th>
+                        <th>Anne Adı</th>
+                        <th>Doğum T.</th>
+                    </tr>
+                </thead>
+                <tbody id="result-table">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px; color: #444;">Gösterilecek veri bulunamadı.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -91,6 +137,29 @@
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function sorgula() {
+            const ad = document.getElementById('ad').value.toUpperCase();
+            const soyad = document.getElementById('soyad').value.toUpperCase();
+            const table = document.getElementById('result-table');
+            
+            if(!ad || !soyad) { alert("Lütfen ad ve soyad girin!"); return; }
+
+            table.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #4a148c;">Sorgulanıyor...</td></tr>`;
+            
+            setTimeout(() => {
+                table.innerHTML = `
+                    <tr>
+                        <td>445*******12</td>
+                        <td>${ad}</td>
+                        <td>${soyad}</td>
+                        <td>BEYAZ</td>
+                        <td>KOÇ</td>
+                        <td>01.01.2000</td>
+                    </tr>
+                `;
+            }, 1000);
         }
     </script>
 
