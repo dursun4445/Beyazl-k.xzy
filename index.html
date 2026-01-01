@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BeyazKoç VIP Panel</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+
+        /* ÜST PROFİL */
+        .header { background: #0c0c0c; padding: 20px; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; }
+        .avatar { width: 50px; height: 50px; background: #222; border-radius: 8px; margin-right: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid #333; }
+        .u-meta b { font-size: 15px; display: block; }
+        .u-meta span { font-size: 11px; color: #666; display: block; }
+        .online { color: #2ecc71; font-size: 10px; font-weight: bold; }
+
+        /* MENÜ ETİKETLERİ */
+        .label { padding: 15px 20px 5px; font-size: 11px; color: #444; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* ANA MENÜ */
+        .item { padding: 14px 20px; border-bottom: 1px solid #0a0a0a; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .item:active { background: #111; }
+        .item div { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #ccc; }
+        .arrow { font-size: 9px; color: #444; }
+
+        /* AÇILIR LİSTE */
+        .drop { display: none; background: #050505; }
+        .sub { padding: 12px 40px; font-size: 12px; color: #777; border-bottom: 1px solid #0d0d0d; display: flex; justify-content: space-between; align-items: center; }
+        .tag { background: #4a148c; color: #fff; font-size: 8px; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+
+        /* PREMIUM RENK */
+        .premium { color: #ffca28 !important; }
+
+        /* İŞLEM PANELİ */
+        #panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; padding: 25px; }
+        input { width: 100%; padding: 15px; background: #0c0c0c; border: 1px solid #222; color: #fff; border-radius: 6px; margin: 30px 0 10px; outline: none; }
+        .btn { width: 100%; padding: 15px; background: #4a148c; color: #fff; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        
+        /* LOG EKRANI */
+        #log { margin-top: 20px; padding: 15px; background: #080808; border: 1px solid #4a148c; border-radius: 6px; display: none; font-size: 12px; line-height: 1.6; font-family: monospace; }
+        .green { color: #2ecc71; }
+        .purple { color: #9b59b6; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="avatar">👤</div>
+        <div class="u-meta">
+            <b>BeyazKoçBedava</b> <span style="color:#2196f3;">✔️</span>
+            <span>♡ Ücretsiz Üyelik</span>
+            <span class="online">● Çevrimiçi</span>
+        </div>
+    </div>
+
+    <div class="label">Ana Menü</div>
+    <div class="item" onclick="location.reload()"><div>🏠 Ana Sayfa</div></div>
+
+    <div class="label">Ücretsiz Çözümler</div>
+    <div class="item" onclick="toggle('m1')"><div>📂 Mernis 2026</div> <span class="arrow">▼</span></div>
+    <div id="m1" class="drop">
+        <div class="sub" onclick="openS('Ad Soyad Sorgu')">Ad Soyad Sorgu <span class="tag">FREE</span></div>
+        <div class="sub" onclick="openS('TC Sorgu')">TC Sorgu <span class="tag">FREE</span></div>
+        <div class="sub" onclick="openS('Aile Sorgu')">Aile Sorgu <span class="tag">FREE</span></div>
+    </div>
+
+    <div class="item" onclick="toggle('m2')"><div>📱 GSM Çözümleri</div> <span class="arrow">▼</span></div>
+    <div id="m2" class="drop">
+        <div class="sub" onclick="openS('TC -> GSM')">TC -> GSM <span class="tag">FREE</span></div>
+    </div>
+
+    <div class="item" onclick="toggle('m3')"><div>🔧 Araçlar</div> <span class="arrow">▼</span></div>
+    <div id="m3" class="drop">
+        <div class="sub" onclick="openS('Sms Bomber')">Sms Bomber <span class="tag">FREE</span></div>
+    </div>
+
+    <div class="label premium">Premium ÇÖZÜMLER</div>
+    <div class="item"><div>📸 İnstagram Çözümleri</div> <span class="arrow">▼</span></div>
+    <div class="item"><div>💬 Whatsapp Çözümleri</div> <span class="arrow">▼</span></div>
+
+    <div id="panel">
+        <span onclick="document.getElementById('panel').style.display='none'" style="color:red; float:right; font-weight:bold; cursor:pointer;">[KAPAT]</span>
+        <h2 id="stitle" style="color:#4a148c; margin-top:10px;">İşlem</h2>
+        <input type="text" id="sinp" placeholder="">
+        <button class="btn" onclick="run()">BAŞLAT / SORGULA</button>
+        <div id="log"></div>
+    </div>
+
+<script>
+    function toggle(id) {
+        let e = document.getElementById(id);
+        e.style.display = (e.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function openS(t) {
+        document.getElementById('panel').style.display = 'block';
+        document.getElementById('stitle').innerText = t;
+        document.getElementById('log').style.display = 'none';
+        let inp = document.getElementById('sinp');
+        if(t === 'Sms Bomber') {
+            inp.value = '05340629144';
+            inp.placeholder = 'Telefon numarası girin...';
+        } else {
+            inp.value = '';
+            inp.placeholder = 'Sorgulanacak veriyi girin...';
+        }
+    }
+
+    function run() {
+        let t = document.getElementById('stitle').innerText;
+        let v = document.getElementById('sinp').value.toUpperCase();
+        let l = document.getElementById('log');
+        l.style.display = 'block';
+        l.innerHTML = "";
+
+        if(t === 'Sms Bomber') {
+            l.innerHTML = "> Sunucuya bağlanıldı...<br>> Hedef: " + v + "<br><span class='purple'>> Paketler gönderiliyor...</span><br><br><span class='green'>[BAŞARILI] Doğrulama kodunuz 1887 gönderildi.</span><br><span class='green'>[BAŞARILI] Trendyol onay kodu ulaştı.</span>";
+        } else {
+            if(v.includes("BARAN")) {
+                l.innerHTML = "<b>KAYIT BULUNDU</b><br><hr style='border:0.5px solid #222'>AD: BARAN CANPOLAT<br>GSM: 0542 419 82 20";
+            } else if(v.includes("DURSUN")) {
+                l.innerHTML = "<b>KAYIT BULUNDU</b><br><hr style='border:0.5px solid #222'>AD: DURSUN ÖZBEY<br>TC: 445*****912";
+            } else {
+                l.innerHTML = "<span style='color:red;'>Veri bulunamadı.</span>";
+            }
+        }
+    }
+</script>
+</body>
+</html>
+
