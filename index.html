@@ -131,4 +131,99 @@
 </html>
 <div class="card" onclick="openLeak()"><div class="icon">⚠️</div><div class="info"><b style="color: #ff4444;">Veri Sızıntısı (LIVE)</b><span style="color: #ff4444;">Anlık Sızan Kullanıcı Bilgileri</span></div></div>
 <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid #4a148c; background: #fff; margin: 10px auto; display: block;">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeyazKoç VIP Panel</title>
+    <style>
+        /* GENEL AYARLAR */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+
+        /* ÜST BAR */
+        .navbar { background: #0c0c0c; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid #1a1a1a; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: bold; color: #4a148c; }
+        .logo img { width: 35px; height: 35px; border-radius: 5px; }
+        .menu-btn { font-size: 24px; cursor: pointer; color: #fff; }
+
+        /* YAN MENÜ (SIDEBAR) */
+        .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: #0c0c0c; transition: 0.4s; z-index: 2000; border-right: 1px solid #1a1a1a; padding-top: 20px; }
+        .sidebar.active { left: 0; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 1500; }
+        .overlay.active { display: block; }
+
+        /* PROFİL KISMI */
+        .profile { padding: 20px; border-bottom: 1px solid #1a1a1a; margin-bottom: 10px; }
+        .profile img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #4a148c; background: #fff; }
+        .profile-info { margin-top: 10px; }
+        .profile-info b { display: block; font-size: 16px; }
+        .profile-info span { font-size: 12px; color: #2ecc71; }
+
+        /* MENÜ LİSTESİ */
+        .nav-list { list-style: none; padding: 0; margin: 0; }
+        .nav-item { padding: 15px 20px; border-bottom: 1px solid #151515; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.3s; color: #ccc; }
+        .nav-item:active { background: #1a1a1a; color: #4a148c; }
+        .nav-item i { font-style: normal; font-size: 20px; width: 25px; text-align: center; }
+        .label { padding: 15px 20px 5px; font-size: 11px; color: #4a148c; font-weight: bold; text-transform: uppercase; }
+
+        /* ANA İÇERİK */
+        .content { margin-top: 80px; padding: 20px; text-align: center; }
+        .hero-card { background: linear-gradient(45deg, #1a1a1a, #0c0c0c); padding: 30px 20px; border-radius: 15px; border: 1px solid #222; margin-bottom: 20px; }
+        .hero-card h2 { margin: 0; color: #fff; font-size: 20px; }
+        .hero-card p { color: #888; font-size: 14px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+            <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" alt="Logo">
+            <span>Beyaz Koç Panel</span>
+        </div>
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="profile">
+            <img src="https://img.freepik.com/premium-vector/ak-47-icon-vector-illustration_619989-1111.jpg" alt="User">
+            <div class="profile-info">
+                <b>BeyazKoçBedava</b>
+                <span>● Çevrimiçi</span>
+            </div>
+        </div>
+
+        <div class="nav-list">
+            <div class="label">ANA ÇÖZÜMLER</div>
+            <div class="nav-item" onclick="alert('SMS Bomber Başlatıldı!')"><i>🚀</i> SMS Bomber</div>
+            <div class="nav-item" onclick="alert('Mernis Sistemi Aktif!')"><i>👤</i> Kişi Çözümleri</div>
+            
+            <div class="label">PREMİUM ARAÇLAR</div>
+            <div class="nav-item" onclick="alert('Veri sızıntısı izleniyor...')"><i>⚠️</i> Veri Sızıntısı</div>
+            <div class="nav-item"><i>📱</i> GSM Çözümleri</div>
+            <div class="nav-item"><i>🏥</i> Sağlık Çözümleri</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="hero-card">
+            <h2>Hoş Geldin, BeyazKoçBedava!</h2>
+            <p>Premium Bitiş Tarihi: <span style="color: #4a148c; font-weight: bold;">YOK!</span></p>
+        </div>
+        
+        <p style="color: #444; font-size: 13px;">🤖 Menüyü sağ üstteki üç çizgiden kullanabilirsin.</p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
 
