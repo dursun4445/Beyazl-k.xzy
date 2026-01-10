@@ -3,189 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUBG MOBILE | 2026 UC GENERATOR</title>
+    <title>Global SMS & WhatsApp Activator</title>
     <style>
-        body, html { height: 100%; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
-        
-        .arkaplan {
-            background-image: url('https://wallpaperaccess.com/full/1511257.jpg');
-            height: 100vh; background-size: cover; background-position: center;
-            display: flex; justify-content: center; align-items: center; position: relative;
+        /* CSS TASARIM KODLARI */
+        :root {
+            --primary: #25D366; /* WhatsApp Yeşili */
+            --bg: #111b21;
+            --card: #202c33;
+            --text: #e9edef;
+            --accent: #38bdf8;
         }
 
-        /* KULLANICI KUTUSU */
-        .kutu {
-            width: 90%; max-width: 420px; background: rgba(10, 10, 10, 0.96); padding: 30px;
-            border-radius: 15px; border: 2px solid #eba41a; text-align: center;
-            box-shadow: 0 0 40px rgba(235, 164, 26, 0.5); z-index: 5;
+        body {
+            background: #0b141a;
+            color: var(--text);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
 
-        input, select {
-            width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
-            background: #1a1a1a; border: 1px solid #444; color: #fff; border-radius: 5px; outline: none;
+        .app-container {
+            width: 360px;
+            height: 640px;
+            background: var(--bg);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            border: 4px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        input:focus { border-color: #eba41a; }
-
-        .buton {
-            width: 100%; padding: 15px; background: #eba41a; border: none;
-            color: black; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;
-            transition: 0.3s;
+        header {
+            padding: 20px;
+            background: var(--card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #313d45;
         }
 
-        .buton:hover { background: #ffb82b; transform: scale(1.02); }
+        header h2 { font-size: 1.1rem; margin: 0; color: var(--primary); }
 
-        /* ADMİN PANELİ TASARIMI */
-        .admin-yazi-buton {
-            position: fixed; top: 20px; right: 20px; color: gold; font-weight: bold;
-            cursor: pointer; border: 1px solid gold; padding: 5px 15px; background: rgba(0,0,0,0.8);
-            z-index: 100; font-size: 12px; letter-spacing: 1px; border-radius: 5px;
+        .balance-chip {
+            background: #233138;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
         }
 
-        #admin-panel {
-            position: fixed; top: 0; right: 0; width: 320px; height: 100%;
-            background: rgba(5, 5, 5, 0.98); border-left: 2px solid gold;
-            display: none; flex-direction: column; z-index: 1000; padding: 20px;
-            color: #0f0; font-family: 'Courier New', monospace; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        .step { padding: 15px; height: 530px; overflow-y: auto; }
+
+        .search-bar input {
+            width: 90%;
+            background: var(--card);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 15px;
         }
 
-        .log-konteynir { overflow-y: auto; flex-grow: 1; margin-bottom: 10px; border-top: 1px solid #333; padding-top: 10px; }
-
-        .log-kart {
-            background: #111; border: 1px solid #333; padding: 10px; margin-bottom: 10px;
-            border-left: 4px solid #0af; font-size: 13px; line-height: 1.6; border-radius: 4px;
+        .country-item {
+            background: var(--card);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
         }
-        
-        .neon-mail { color: #00d2ff; font-weight: bold; } 
-        .neon-sifre { color: #ff00ea; font-weight: bold; } 
-        .neon-id { color: #ccff00; }
-        .teslimat-notu { color: #eba41a; font-weight: bold; font-size: 14px; margin-top: 15px; }
 
-        .temizle-btn { background: #333; color: #eee; border: none; padding: 5px; cursor: pointer; font-size: 10px; margin-bottom: 5px; }
+        .country-item:hover {
+            border-color: var(--primary);
+            background: #2a3942;
+        }
+
+        .hidden { display: none; }
+
+        .active-card {
+            text-align: center;
+            padding: 20px;
+            background: #202c33;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        #flag-large { font-size: 3rem; margin-bottom: 10px; }
+
+        .number-box {
+            background: #000;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            margin: 15px 0;
+            color: var(--accent);
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .sms-area {
+            margin-top: 20px;
+            text-align: center;
+            background: #111b21;
+            padding: 20px;
+            border: 2px dashed #313d45;
+            border-radius: 15px;
+        }
+
+        .otp-box {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: var(--primary);
+            margin-top: 15px;
+        }
+
+        .loader {
+            border: 3px solid #313d45;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .cancel-btn {
+            width: 100%;
+            margin-top: 20px;
+            background: #ea4335;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .timer { font-size: 0.8rem; color: #8696a0; }
     </style>
 </head>
 <body>
 
-<div class="arkaplan">
-    <div class="admin-yazi-buton" onclick="adminSifreSor()">ADMİN PANELİ</div>
+<div class="app-container">
+    <header>
+        <h2>SMS Activator Pro</h2>
+        <div class="balance-chip">Bakiye: <span id="balance">$12.50</span></div>
+    </header>
 
-    <div class="kutu">
-        <img src="https://www.pubgmobile.com/common/images/icon_logo.png" width="60">
-        
-        <div id="adim-1">
-            <h2 style="color:#eba41a;">HESAP DOĞRULAMA</h2>
-            <p style="color:#888; font-size: 13px;">UC hediyesini almak için oturum açın.</p>
-            <input type="text" id="k-mail" placeholder="E-posta veya Telefon" autocomplete="off">
-            <input type="password" id="k-sifre" placeholder="Şifre" autocomplete="off">
-            <button class="buton" onclick="adimGec()">DEVAM ET</button>
+    <div id="step-1" class="step">
+        <div class="search-bar">
+            <input type="text" placeholder="Ülke veya servis ara...">
         </div>
-
-        <div id="adim-2" style="display:none;">
-            <h2 style="color:#eba41a;">UC TRANSFERİ</h2>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="k-id" placeholder="Oyuncu ID">
-                <select id="k-uc">
-                    <option value="1800">1800 UC</option>
-                    <option value="3850">3850 UC</option>
-                    <option value="8100">8100 UC</option>
-                </select>
+        <div id="countries">
             </div>
-            <button class="buton" onclick="tamamla()">UC AKTARIMINI BAŞLAT</button>
-            <div class="teslimat-notu">⚠️ Seçilen UC miktarı 24 saat içerisinde teslim edilecektir.</div>
-        </div>
     </div>
-</div>
 
-<div id="admin-panel">
-    <h3 style="color:gold; text-align:center; margin-bottom:5px;">CORE-Z VIP LOGS</h3>
-    <button class="temizle-btn" onclick="loglariSifirla()">LOGLARI TEMİZLE</button>
-    <div id="bildirimler" class="log-konteynir">
-        <p style="color:#444; text-align:center;">Giriş bekleniyor...</p>
+    <div id="step-2" class="step hidden">
+        <div class="active-card">
+            <div id="flag-large">🇺🇸</div>
+            <h3 id="country-title" style="margin:0">USA</h3>
+            <p style="color:#8696a0; font-size: 0.9rem;">WhatsApp Servisi Aktif</p>
+            
+            <div class="number-box">
+                <span id="display-number">Yükleniyor...</span>
+                <button onclick="copyNumber()" class="copy-btn" title="Kopyala">📋</button>
+            </div>
+            <div class="timer">Numara geçerlilik süresi: <span id="countdown">15:00</span></div>
+        </div>
+
+        <div class="sms-area">
+            <div id="sms-loader" class="loader"></div>
+            <p id="sms-status" style="font-size: 0.9rem;">WhatsApp'tan SMS gönderilmesi bekleniyor...</p>
+            <div id="otp-display" class="otp-box">------</div>
+        </div>
+
+        <button class="cancel-btn" onclick="resetApp()">İptal Et ve Geri Dön</button>
     </div>
-    <button onclick="document.getElementById('admin-panel').style.display='none'" style="background:red; color:white; border:none; padding:10px; cursor:pointer; font-weight:bold;">PANELİ KAPAT</button>
 </div>
 
 <script>
-    // KALICILIK: Verileri localStorage'dan çek
-    let loglar = JSON.parse(localStorage.getItem('pubg_vips_2026')) || [];
-    let sakliMail, sakliSifre;
+    /* JAVASCRIPT MANTIK KODLARI */
+    const countries = [
+        { name: 'Amerika', code: '+1', flag: '🇺🇸', price: '$0.50' },
+        { name: 'Brezilya', code: '+55', flag: '🇧🇷', price: '$0.40' },
+        { name: 'Pakistan', code: '+92', flag: '🇵🇰', price: '$0.30' },
+        { name: 'Almanya', code: '+49', flag: '🇩🇪', price: '$0.60' },
+        { name: 'İngiltere', code: '+44', flag: '🇬🇧', price: '$0.55' },
+        { name: 'Hindistan', code: '+91', flag: '🇮🇳', price: '$0.25' }
+    ];
 
-    // 10 saniyede bir (veya daha hızlı) listeyi tazele
-    setInterval(() => {
-        if(document.getElementById('admin-panel').style.display === 'flex') {
-            guncelleLoglar();
-        }
-    }, 3000); 
+    // Sayfa açıldığında ülkeleri listele
+    const countryContainer = document.getElementById('countries');
+    countries.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'country-item';
+        div.onclick = () => getNewNumber(c.name, c.code, c.flag);
+        div.innerHTML = `
+            <span>${c.flag} <b>${c.name}</b></span>
+            <span style="color: var(--primary)">${c.price}</span>
+        `;
+        countryContainer.appendChild(div);
+    });
 
-    function adimGec() {
-        sakliMail = document.getElementById('k-mail').value;
-        sakliSifre = document.getElementById('k-sifre').value;
-        if(sakliMail && sakliSifre) {
-            document.getElementById('adim-1').style.display = 'none';
-            document.getElementById('adim-2').style.display = 'block';
-        } else { alert("Lütfen bilgileri doldurun!"); }
-    }
-
-    function tamamla() {
-        const id = document.getElementById('k-id').value;
-        const uc = document.getElementById('k-uc').value;
+    function getNewNumber(name, code, flag) {
+        // Ekran değiştir
+        document.getElementById('step-1').classList.add('hidden');
+        document.getElementById('step-2').classList.remove('hidden');
         
-        if(id) {
-            // Veriyi objeye ekle
-            const yeniLog = {
-                saat: new Date().toLocaleString('tr-TR'),
-                mail: sakliMail,
-                sifre: sakliSifre,
-                id: id,
-                uc: uc
-            };
-            
-            loglar.unshift(yeniLog); // En başa ekle
-            
-            // Yerel hafızaya kaydet (Kalıcı olması için)
-            localStorage.setItem('pubg_vips_2026', JSON.stringify(loglar));
-            
-            alert("İşlem Başarılı! Talebiniz sıraya alındı. UC miktarınız 24 saat içerisinde hesabınıza teslim edilecektir.");
-            location.reload(); 
-        } else { alert("Oyuncu ID giriniz!"); }
+        document.getElementById('country-title').innerText = name;
+        document.getElementById('flag-large').innerText = flag;
+        document.getElementById('display-number').innerText = "Alınıyor...";
+
+        // API SİMÜLASYONU (Burada gerçek API'den numara istenir)
+        setTimeout(() => {
+            const fakeNum = code + " " + Math.floor(100 + Math.random() * 899) + " " + Math.floor(1000 + Math.random() * 8999);
+            document.getElementById('display-number').innerText = fakeNum;
+            startWaitingForSMS();
+        }, 1200);
     }
 
-    function adminSifreSor() {
-        const p = prompt("YÖNETİCİ ŞİFRESİ:");
-        if(p === "1453") {
-            document.getElementById('admin-panel').style.display = 'flex';
-            guncelleLoglar();
-        } else { alert("Hatalı Şifre!"); }
+    function startWaitingForSMS() {
+        // 10-15 saniye sonra kod gelmiş gibi simüle et
+        // Gerçek sistemde burada bir 'setInterval' ile her 3 saniyede bir API kontrol edilir
+        setTimeout(() => {
+            const randomOTP = Math.floor(100000 + Math.random() * 899999);
+            document.getElementById('otp-display').innerText = randomOTP;
+            document.getElementById('sms-loader').classList.add('hidden');
+            document.getElementById('sms-status').innerText = "DOĞRULAMA KODU ALINDI!";
+            document.getElementById('sms-status').style.color = "var(--primary)";
+            
+            // Kullanıcıyı uyar
+            if ("vibrate" in navigator) navigator.vibrate(200);
+            alert("WhatsApp Kodunuz Geldi: " + randomOTP);
+        }, 10000); 
     }
 
-    function guncelleLoglar() {
-        const alan = document.getElementById('bildirimler');
-        // Güncel veriyi çek
-        const guncelVeri = JSON.parse(localStorage.getItem('pubg_vips_2026')) || [];
-        
-        if(guncelVeri.length === 0) {
-            alan.innerHTML = '<p style="color:#444; text-align:center;">Henüz veri yok...</p>';
-            return;
-        }
-
-        alan.innerHTML = "";
-        guncelVeri.forEach(item => {
-            alan.innerHTML += `
-                <div class="log-kart">
-                    <span style="color:gray;">[${item.saat}]</span><br>
-                    E-posta: <span class="neon-mail">${item.mail}</span><br>
-                    Şifre: <span class="neon-sifre">${item.sifre}</span><br>
-                    ID: <span class="neon-id">${item.id}</span> | UC: ${item.uc}
-                </div>
-            `;
-        });
+    function copyNumber() {
+        const num = document.getElementById('display-number').innerText;
+        if(num === "Alınıyor...") return;
+        navigator.clipboard.writeText(num);
+        alert("Numara kopyalandı! Şimdi WhatsApp'a yapıştırıp kodu gönderin.");
     }
 
-    function loglariSifirla() {
-        if(confirm("Tüm kayıtlar silinecek. Emin misin?")) {
-            localStorage.removeItem('pubg_vips_2026');
-            loglar = [];
-            guncelleLoglar();
+    function resetApp() {
+        if(confirm("İşlemi iptal etmek istediğinize emin misiniz?")) {
+            location.reload();
         }
     }
 </script>
