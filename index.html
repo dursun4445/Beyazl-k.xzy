@@ -1,277 +1,148 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global SMS & WhatsApp Activator</title>
-    <style>
-        /* CSS TASARIM KODLARI */
-        :root {
-            --primary: #25D366; /* WhatsApp Yeşili */
-            --bg: #111b21;
-            --card: #202c33;
-            --text: #e9edef;
-            --accent: #38bdf8;
-        }
+// PlayerCharacter.h
+#pragma once
+#include "CoreMinimal.h"
+#include "GameFramework/Character.h"
+#include "PlayerCharacter.generated.h"
 
-        body {
-            background: #0b141a;
-            color: var(--text);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
+class AWeapon;
+class AZone;
 
-        .app-container {
-            width: 360px;
-            height: 640px;
-            background: var(--bg);
-            border-radius: 30px;
-            overflow: hidden;
-            position: relative;
-            border: 4px solid #333;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
+UCLASS()
+class DROPZONE_API APlayerCharacter : public ACharacter
+{
+    GENERATED_BODY()
 
-        header {
-            padding: 20px;
-            background: var(--card);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #313d45;
-        }
+public:
+    APlayerCharacter();
 
-        header h2 { font-size: 1.1rem; margin: 0; color: var(--primary); }
+protected:
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-        .balance-chip {
-            background: #233138;
-            padding: 5px 12px;
-            border-radius: 20px;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
+public:
+    void MoveForward(float Value);
+    void MoveRight(float Value);
+    void StartSprint();
+    void StopSprint();
 
-        .step { padding: 15px; height: 530px; overflow-y: auto; }
+    // Weapon
+    void PickupWeapon(AWeapon* NewWeapon);
+    AWeapon* CurrentWeapon;
 
-        .search-bar input {
-            width: 90%;
-            background: var(--card);
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            color: white;
-            margin-bottom: 15px;
-        }
+    // Health
+    float Health = 100.f;
 
-        .country-item {
-            background: var(--card);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
+    // Zone damage
+    void CheckZone(AZone* Zone);
+};
 
-        .country-item:hover {
-            border-color: var(--primary);
-            background: #2a3942;
-        }
+// PlayerCharacter.cpp
+#include "PlayerCharacter.h"
+#include "Weapon.h"
+#include "Zone.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
-        .hidden { display: none; }
+void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput)
+{
+    PlayerInput->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
+    PlayerInput->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
+    PlayerInput->BindAction("Sprint", IE_Pressed, this, &APlayerCharacter::StartSprint);
+    PlayerInput->BindAction("Sprint", IE_Released, this, &APlayerCharacter::StopSprint);
+}
 
-        .active-card {
-            text-align: center;
-            padding: 20px;
-            background: #202c33;
-            border-radius: 15px;
-            margin-top: 10px;
-        }
+void APlayerCharacter::MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); }
+void APlayerCharacter::MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); }
+void APlayerCharacter::StartSprint() { GetCharacterMovement()->MaxWalkSpeed = 700.f; }
+void APlayerCharacter::StopSprint() { GetCharacterMovement()->MaxWalkSpeed = 400.f; }
 
-        #flag-large { font-size: 3rem; margin-bottom: 10px; }
+void APlayerCharacter::PickupWeapon(AWeapon* NewWeapon)
+{
+    if (CurrentWeapon) CurrentWeapon->Destroy();
+    CurrentWeapon = NewWeapon;
+    CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, "WeaponSocket");
+}
 
-        .number-box {
-            background: #000;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1.4rem;
-            margin: 15px 0;
-            color: var(--accent);
-            font-family: monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
+void APlayerCharacter::CheckZone(AZone* Zone)
+{
+    if (!Zone->IsInside(GetActorLocation()))
+        Health -= 1.f * GetWorld()->GetDeltaSeconds();
+}
 
-        .copy-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
+// Weapon.h
+#pragma once
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Weapon.generated.h"
 
-        .sms-area {
-            margin-top: 20px;
-            text-align: center;
-            background: #111b21;
-            padding: 20px;
-            border: 2px dashed #313d45;
-            border-radius: 15px;
-        }
+UCLASS()
+class DROPZONE_API AWeapon : public AActor
+{
+    GENERATED_BODY()
 
-        .otp-box {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: 5px;
-            color: var(--primary);
-            margin-top: 15px;
-        }
+public:
+    int Ammo = 30;
+    void Fire();
 
-        .loader {
-            border: 3px solid #313d45;
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-        }
+    UPROPERTY(VisibleAnywhere)
+    USceneComponent* MuzzleLocation;
+};
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+// Weapon.cpp
+#include "Weapon.h"
+#include "Kismet/GameplayStatics.h"
 
-        .cancel-btn {
-            width: 100%;
-            margin-top: 20px;
-            background: #ea4335;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+void AWeapon::Fire()
+{
+    if (Ammo <= 0) return;
+    Ammo--;
 
-        .timer { font-size: 0.8rem; color: #8696a0; }
-    </style>
-</head>
-<body>
+    FVector Start = MuzzleLocation->GetComponentLocation();
+    FVector End = Start + (GetOwner()->GetActorForwardVector() * 10000);
+    FHitResult Hit;
+    GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility);
 
-<div class="app-container">
-    <header>
-        <h2>SMS Activator Pro</h2>
-        <div class="balance-chip">Bakiye: <span id="balance">$12.50</span></div>
-    </header>
+    if (Hit.Actor.IsValid())
+        UGameplayStatics::ApplyDamage(Hit.Actor.Get(), 25.f, nullptr, this, nullptr);
+}
 
-    <div id="step-1" class="step">
-        <div class="search-bar">
-            <input type="text" placeholder="Ülke veya servis ara...">
-        </div>
-        <div id="countries">
-            </div>
-    </div>
+// Zone.h
+#pragma once
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Zone.generated.h"
 
-    <div id="step-2" class="step hidden">
-        <div class="active-card">
-            <div id="flag-large">🇺🇸</div>
-            <h3 id="country-title" style="margin:0">USA</h3>
-            <p style="color:#8696a0; font-size: 0.9rem;">WhatsApp Servisi Aktif</p>
-            
-            <div class="number-box">
-                <span id="display-number">Yükleniyor...</span>
-                <button onclick="copyNumber()" class="copy-btn" title="Kopyala">📋</button>
-            </div>
-            <div class="timer">Numara geçerlilik süresi: <span id="countdown">15:00</span></div>
-        </div>
+UCLASS()
+class DROPZONE_API AZone : public AActor
+{
+    GENERATED_BODY()
+public:
+    float CurrentRadius = 3000.f;
+    float ShrinkSpeed = 10.f;
+    bool IsInside(FVector Location) { return FVector::Dist(GetActorLocation(), Location) <= CurrentRadius; }
 
-        <div class="sms-area">
-            <div id="sms-loader" class="loader"></div>
-            <p id="sms-status" style="font-size: 0.9rem;">WhatsApp'tan SMS gönderilmesi bekleniyor...</p>
-            <div id="otp-display" class="otp-box">------</div>
-        </div>
+    virtual void Tick(float DeltaTime) override;
+    UPROPERTY(VisibleAnywhere)
+    class USphereComponent* ZoneSphere;
+};
 
-        <button class="cancel-btn" onclick="resetApp()">İptal Et ve Geri Dön</button>
-    </div>
-</div>
+// Zone.cpp
+#include "Zone.h"
+#include "Components/SphereComponent.h"
 
-<script>
-    /* JAVASCRIPT MANTIK KODLARI */
-    const countries = [
-        { name: 'Amerika', code: '+1', flag: '🇺🇸', price: '$0.50' },
-        { name: 'Brezilya', code: '+55', flag: '🇧🇷', price: '$0.40' },
-        { name: 'Pakistan', code: '+92', flag: '🇵🇰', price: '$0.30' },
-        { name: 'Almanya', code: '+49', flag: '🇩🇪', price: '$0.60' },
-        { name: 'İngiltere', code: '+44', flag: '🇬🇧', price: '$0.55' },
-        { name: 'Hindistan', code: '+91', flag: '🇮🇳', price: '$0.25' }
-    ];
+void AZone::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+    CurrentRadius -= ShrinkSpeed * DeltaTime;
+    ZoneSphere->SetSphereRadius(CurrentRadius);
+}
 
-    // Sayfa açıldığında ülkeleri listele
-    const countryContainer = document.getElementById('countries');
-    countries.forEach(c => {
-        const div = document.createElement('div');
-        div.className = 'country-item';
-        div.onclick = () => getNewNumber(c.name, c.code, c.flag);
-        div.innerHTML = `
-            <span>${c.flag} <b>${c.name}</b></span>
-            <span style="color: var(--primary)">${c.price}</span>
-        `;
-        countryContainer.appendChild(div);
-    });
+// Plane.cpp (Uçaktan atlama)
+void APlane::DropPlayer(APlayerCharacter* Player)
+{
+    FVector DropLocation = GetActorLocation();
+    Player->SetActorLocation(DropLocation);
+    Player->EnableParachute(); // Paraşüt animasyonu + fizik eklenecek
+}
 
-    function getNewNumber(name, code, flag) {
-        // Ekran değiştir
-        document.getElementById('step-1').classList.add('hidden');
-        document.getElementById('step-2').classList.remove('hidden');
-        
-        document.getElementById('country-title').innerText = name;
-        document.getElementById('flag-large').innerText = flag;
-        document.getElementById('display-number').innerText = "Alınıyor...";
-
-        // API SİMÜLASYONU (Burada gerçek API'den numara istenir)
-        setTimeout(() => {
-            const fakeNum = code + " " + Math.floor(100 + Math.random() * 899) + " " + Math.floor(1000 + Math.random() * 8999);
-            document.getElementById('display-number').innerText = fakeNum;
-            startWaitingForSMS();
-        }, 1200);
-    }
-
-    function startWaitingForSMS() {
-        // 10-15 saniye sonra kod gelmiş gibi simüle et
-        // Gerçek sistemde burada bir 'setInterval' ile her 3 saniyede bir API kontrol edilir
-        setTimeout(() => {
-            const randomOTP = Math.floor(100000 + Math.random() * 899999);
-            document.getElementById('otp-display').innerText = randomOTP;
-            document.getElementById('sms-loader').classList.add('hidden');
-            document.getElementById('sms-status').innerText = "DOĞRULAMA KODU ALINDI!";
-            document.getElementById('sms-status').style.color = "var(--primary)";
-            
-            // Kullanıcıyı uyar
-            if ("vibrate" in navigator) navigator.vibrate(200);
-            alert("WhatsApp Kodunuz Geldi: " + randomOTP);
-        }, 10000); 
-    }
-
-    function copyNumber() {
-        const num = document.getElementById('display-number').innerText;
-        if(num === "Alınıyor...") return;
-        navigator.clipboard.writeText(num);
-        alert("Numara kopyalandı! Şimdi WhatsApp'a yapıştırıp kodu gönderin.");
-    }
-
-    function resetApp() {
-        if(confirm("İşlemi iptal etmek istediğinize emin misiniz?")) {
-            location.reload();
-        }
-    }
-</script>
-
-</body>
-</html>
+// AI Bot Basit
+AIController->MoveToActor(Player, 300.f); // Player’ı takip eder
