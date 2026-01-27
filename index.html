@@ -1,148 +1,98 @@
-// PlayerCharacter.h
-#pragma once
-#include "CoreMinimal.h"
-#include "GameFramework/Character.h"
-#include "PlayerCharacter.generated.h"
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Zümra</title>
 
-class AWeapon;
-class AZone;
-
-UCLASS()
-class DROPZONE_API APlayerCharacter : public ACharacter
-{
-    GENERATED_BODY()
-
-public:
-    APlayerCharacter();
-
-protected:
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-public:
-    void MoveForward(float Value);
-    void MoveRight(float Value);
-    void StartSprint();
-    void StopSprint();
-
-    // Weapon
-    void PickupWeapon(AWeapon* NewWeapon);
-    AWeapon* CurrentWeapon;
-
-    // Health
-    float Health = 100.f;
-
-    // Zone damage
-    void CheckZone(AZone* Zone);
-};
-
-// PlayerCharacter.cpp
-#include "PlayerCharacter.h"
-#include "Weapon.h"
-#include "Zone.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/GameplayStatics.h"
-
-void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput)
-{
-    PlayerInput->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
-    PlayerInput->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
-    PlayerInput->BindAction("Sprint", IE_Pressed, this, &APlayerCharacter::StartSprint);
-    PlayerInput->BindAction("Sprint", IE_Released, this, &APlayerCharacter::StopSprint);
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(120deg,#ff9a9e,#fad0c4);
 }
 
-void APlayerCharacter::MoveForward(float Value) { AddMovementInput(GetActorForwardVector(), Value); }
-void APlayerCharacter::MoveRight(float Value) { AddMovementInput(GetActorRightVector(), Value); }
-void APlayerCharacter::StartSprint() { GetCharacterMovement()->MaxWalkSpeed = 700.f; }
-void APlayerCharacter::StopSprint() { GetCharacterMovement()->MaxWalkSpeed = 400.f; }
-
-void APlayerCharacter::PickupWeapon(AWeapon* NewWeapon)
-{
-    if (CurrentWeapon) CurrentWeapon->Destroy();
-    CurrentWeapon = NewWeapon;
-    CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, "WeaponSocket");
+.box{
+  background:white;
+  padding:40px;
+  border-radius:15px;
+  text-align:center;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
 }
 
-void APlayerCharacter::CheckZone(AZone* Zone)
-{
-    if (!Zone->IsInside(GetActorLocation()))
-        Health -= 1.f * GetWorld()->GetDeltaSeconds();
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:8px;
+  background:#ff5f7e;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{background:#ff2f5c;}
+
+#siir{
+  display:none;
+  background:#111;
+  color:white;
+  width:100%;
+  height:100vh;
+  align-items:center;
+  justify-content:center;
 }
 
-// Weapon.h
-#pragma once
-#include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Weapon.generated.h"
-
-UCLASS()
-class DROPZONE_API AWeapon : public AActor
-{
-    GENERATED_BODY()
-
-public:
-    int Ammo = 30;
-    void Fire();
-
-    UPROPERTY(VisibleAnywhere)
-    USceneComponent* MuzzleLocation;
-};
-
-// Weapon.cpp
-#include "Weapon.h"
-#include "Kismet/GameplayStatics.h"
-
-void AWeapon::Fire()
-{
-    if (Ammo <= 0) return;
-    Ammo--;
-
-    FVector Start = MuzzleLocation->GetComponentLocation();
-    FVector End = Start + (GetOwner()->GetActorForwardVector() * 10000);
-    FHitResult Hit;
-    GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility);
-
-    if (Hit.Actor.IsValid())
-        UGameplayStatics::ApplyDamage(Hit.Actor.Get(), 25.f, nullptr, this, nullptr);
+.poem{
+  max-width:500px;
+  padding:30px;
+  line-height:1.6;
+  background:rgba(255,255,255,0.08);
+  border-radius:12px;
+  text-align:center;
 }
+a{color:#ff9a9e; text-decoration:none;}
+</style>
+</head>
 
-// Zone.h
-#pragma once
-#include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Zone.generated.h"
+<body>
 
-UCLASS()
-class DROPZONE_API AZone : public AActor
-{
-    GENERATED_BODY()
-public:
-    float CurrentRadius = 3000.f;
-    float ShrinkSpeed = 10.f;
-    bool IsInside(FVector Location) { return FVector::Dist(GetActorLocation(), Location) <= CurrentRadius; }
+<div class="box" id="giris">
+  <h1>Seni seviyorum Zümra</h1>
+  <button onclick="goster()">Şiire Git</button>
+</div>
 
-    virtual void Tick(float DeltaTime) override;
-    UPROPERTY(VisibleAnywhere)
-    class USphereComponent* ZoneSphere;
-};
+<div id="siir">
+  <div class="poem">
+    <p>
+      Ne olur gel…<br>
+      Seni çok özledim.<br><br>
 
-// Zone.cpp
-#include "Zone.h"
-#include "Components/SphereComponent.h"
+      Adını duyunca kalbim susuyor,<br>
+      gözlerim seni arıyor her yerde.<br><br>
 
-void AZone::Tick(float DeltaTime)
-{
-    Super::Tick(DeltaTime);
-    CurrentRadius -= ShrinkSpeed * DeltaTime;
-    ZoneSphere->SetSphereRadius(CurrentRadius);
+      Belki sen beni hiç fark etmedin,<br>
+      ama ben seni hep sevdim içimde.<br><br>
+
+      Bir gün dönersen diye,<br>
+      bu satırları saklıyorum kalbimde.
+    </p>
+
+    <a href="#" onclick="geri()">← Geri dön</a>
+  </div>
+</div>
+
+<script>
+function goster(){
+  document.getElementById("giris").style.display="none";
+  document.getElementById("siir").style.display="flex";
 }
-
-// Plane.cpp (Uçaktan atlama)
-void APlane::DropPlayer(APlayerCharacter* Player)
-{
-    FVector DropLocation = GetActorLocation();
-    Player->SetActorLocation(DropLocation);
-    Player->EnableParachute(); // Paraşüt animasyonu + fizik eklenecek
+function geri(){
+  document.getElementById("siir").style.display="none";
+  document.getElementById("giris").style.display="block";
 }
+</script>
 
-// AI Bot Basit
-AIController->MoveToActor(Player, 300.f); // Player’ı takip eder
+</body>
+</html>
